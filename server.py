@@ -20,15 +20,28 @@ def homepage():
 @app.route("/login")
 def login():
     username = request.form.get("username")
-
-
-
-@app.route("/reservations")
-def all_reservations_by_user():
-    return crud.get_reservation_by_username
     
+    user = User.get_user_by_username(username)
 
-@app.route("/create_reservation", methods=["POST"])
+    if user:
+        session["username"] = username
+        # flash(f"Welcome to the MelonWell, {username}!")
+        return redirect(url_for('make_reservation'))
+    else:
+        flash("The username you have entered does not exist.")
+
+    return redirect("/")
+
+
+@app.route("/logout")
+def logout():
+    session["username"] = None
+    flash("You have been logged out. Please Log In.")
+    return redirect("/")
+
+
+
+@app.route("/reservations/create", methods=["GET", "POST"])
 def save_reservation():
     username=request.form.get("username")
     datetime_str = request.form['datetime']
