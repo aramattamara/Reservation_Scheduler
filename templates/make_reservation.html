@@ -1,13 +1,54 @@
-{% extends 'index.html' %} {% block title %}All Movies{% endblock %} {% block
-body %}
+{% extends 'base.html' %}
+<title>{% block title %}Conversation Insights{% endblock %}</title>
 
-<form class="d-flex" action="/reservations">
-  <button class="w-100 btn btn-lg btn-primary" type="submit">
-    My reservations
-  </button>
-</form>
-<form class="d-flex" action="/logout">
-  <button class="w-100 btn btn-lg btn-primary" type="submit">Log Out</button>
-</form>
+{% block content %}
 
-{% end block %}
+<div class="container">
+    <div class="row">
+        <header class="navbar">
+            <a href="#" class="navbar-brand"><img class="mb-4" src="/static/melon.png" alt="" width="72" height="57"><span id="logo">MelonWell</span></a>
+            <div class="col-lg-6 col-xl-auto">
+                <form class="d-flex" action="/reservations">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">My reservations</button>
+                </form>
+                <form class="d-flex" action="/logout">
+                    <button class="w-100 btn btn-lg btn-primary" type="submit">Log Out</button>
+                </form>
+            </div>
+        </header>
+    </div>
+    <div class="row">
+        <div class="col">
+            &nbsp;
+        </div>
+        <div class="col-6">
+            <h1>Make a Reservation to Join Us<br />for a Tasting!</h1>
+            <p>Reservations are not required but recommended for this tasting of current releases.</p>
+            <p>Seated tastings at the lounge area, in the Tasting Room or on the Terrace are $45 per person.</p>
+            <i>Tasting starting at 8:00am and lasts until 5:00pm.</i>
+            <form action="/reservations/create" method="POST">
+                <div class="reservation_date">
+                    <div class="user-box">
+                        <input type='date' name='date' id='reservation_date' value='' required onchange="availableTimeSlots(event)"/>
+                    </div>
+                    <span class="text-muted">{{ username[0]|upper}}{{username[1:] }}, please select a date.</span>
+                </div>
+                {% for msg in get_flashed_messages() %}
+                    <br />
+                    <p id="flashed-msg" class="flashed-msg">{{ msg }}</p>
+                {% endfor %}
+                <input type="hidden" name="timeslot" id="timeslot" />
+                <div id="slots">
+                    {% for timeslot in timeslots %}
+                        <button class="btn btn-sm btn-primary" value="{{ timeslot }}" type="button" {% if timeslot in booked_timeslots %}disabled {% endif %}onclick="timeslotSelected(this);">{{ timeslot }}</button>
+                    {% endfor %}
+                </div>
+                <button class="w-100 btn btn-lg btn-primary" type="submit">Reserve time slot</button>
+            </form>
+        </div>
+        <div class="col">
+            &nbsp;
+        </div>
+    </div>
+</div>
+{% endblock %}

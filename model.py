@@ -1,5 +1,6 @@
 """Models for reservation scheduler app."""
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import UniqueConstraint
 
 db = SQLAlchemy()
 
@@ -61,12 +62,21 @@ class Reservation(db.Model):
         """get all reservations for user"""
         return cls.query.filter(cls.user_id == user_id).all()
 
+    @classmethod
+    def get_timeslots_for_date(cls, reservation_date):
+        reservations = cls.query.filter(cls.reservation_date==reservation_date).all()
+        return [r.time_slot for r in reservations]
+
+    @classmethod
+    def delete_reservation(cls, reservation_id):
+        cls.query.where(cls.reservation_id == reservation_id).delete()
+        db.session.commit()
+
 
 def connect_to_db(flask_app, db_uri="postgresql:///reservation", echo=True):
     flask_app.config["SQLALCHEMY_DATABASE_URI"] = db_uri
     flask_app.config["SQLALCHEMY_ECHO"] = echo
     flask_app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    print('kuku')
     db.app = flask_app
     db.init_app(flask_app)
 
