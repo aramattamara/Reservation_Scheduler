@@ -11,7 +11,6 @@ app.secret_key = "dev"
 connect_to_db(app)
 app.jinja_env.undefined = StrictUndefined
 
-test
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -115,7 +114,6 @@ def show_reservations():
 
     all_reservations = Reservation.get_reseravations(user.id)
     return render_template('reservation.html', username=username, all_reservations=all_reservations)
-
 
 @app.route("/reservations/delete/<id>", methods=['DELETE'])
 def delete_reservation(id):
