@@ -11,7 +11,7 @@ app.secret_key = "dev"
 connect_to_db(app)
 app.jinja_env.undefined = StrictUndefined
 
-
+test
 @app.route("/")
 def index():
     return render_template("index.html")
