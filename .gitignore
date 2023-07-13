@@ -1,1 +1,7 @@
 env
+.DS_Store
+*.iml
+
+
+/client
+/static/js/map.jsx
