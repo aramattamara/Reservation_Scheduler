@@ -3,5 +3,3 @@ env
 *.iml
 
 
-/client
-/static/js/map.jsx
