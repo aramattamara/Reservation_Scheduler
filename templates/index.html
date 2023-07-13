@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-<title>{% block title %}Conversation Insights{% endblock %}</title>
+<title>{% block title %}{% endblock %}</title>
 
 {% block content %}
 
     <div class="container">
         <div class="row">
-            <h1 class="logo_font">welcome to lemon bar</h1>
+            <h1 class="logo_font">Zaza bar </h1>
             {% for msg in get_flashed_messages() %}
                 <p id="flashed-msg" class="flashed-msg">{{ msg }}</p>
             {% endfor %}

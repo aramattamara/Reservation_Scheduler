@@ -2,7 +2,6 @@ from flask import Flask, jsonify, render_template, request, flash, session, redi
 from jinja2 import StrictUndefined
 from model import connect_to_db, Reservation, User, db
 import sqlalchemy
-import os
 from datetime import datetime
 
 app = Flask(__name__)
@@ -119,16 +118,16 @@ def show_reservations():
 @app.route("/reservations/delete/<id>", methods=['DELETE'])
 def delete_reservation(id):
     if "username" not in session:
-        return jsonify({ 'success': False }), 500
+        return jsonify({'success': False}), 500
 
     try:
         Reservation.delete_reservation(id)
-        return jsonify({ 'success': True })
+        return jsonify({'success': True})
 
     except AttributeError as e:
-        return jsonify({ 'success': False }), 500
+        return jsonify({'success': False}), 500
 
 
 if __name__ == "__main__":
     connect_to_db(app)
-    app.run(host="0.0.0.0", debug=True)
+    app.run(debug=True, host="0.0.0.0")
