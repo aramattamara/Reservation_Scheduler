@@ -119,25 +119,13 @@ function Menu() {
 }
 
 function Item({itemObj}) {
-  function getColor(tag) {
-    if (tag === "organic") {
-      return 'green';
-    }
-    if (tag === "vegetarian") {
-      return 'lightgreen';
-    }
-    if (tag === "hot") {
-      return 'red';
-    }
-
-  }
 
   return (
       <li>
         <img src={itemObj.photoName} alt={itemObj.name}></img>
         <span>{itemObj.name}</span>
         <span>{itemObj.ingredients}</span>
-        <span style={{backgroundColor: getColor(itemObj.tag)}}>{itemObj.tag}</span>
+        <span style = {{ backgroundColor: { vegetarian: "green", organic: "yellow", hot: "red" }[itemObj.tag] || "transparent" }}>{itemObj.tag}</span>
       </li>
   )
 
